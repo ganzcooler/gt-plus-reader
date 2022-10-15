@@ -1,10 +1,10 @@
 {
 
   "manifest_version": 2,
-  "name": "GT Reader",
+  "name": "GT Plus Reader",
   "version": "1.0",
 
-  "description": "Entfernt die unnötig teure Paywall auf der Seite des GT.",
+  "description": "Entfernt die unnötig teure Paywall auf Plus-Artikeln des GT.",
 
   "content_scripts": [
     {

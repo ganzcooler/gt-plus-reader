@@ -3,7 +3,6 @@ var sourcecode = document.getElementsByTagName("html")[0].innerHTML;
 
 // Remove bars from article
 var article = header.parentElement;
-//article.lastChild.getElementsByTagName("rect")[0].remove();
 article.lastChild.remove();
 
 // Remove top gradient
