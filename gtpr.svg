@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="51.44968mm"
+   height="51.44968mm"
+   viewBox="0 0 51.44968 51.44968"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="gtpr.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2.8181656"
+     inkscape:cx="59.435826"
+     inkscape:cy="100.95219"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="-9.5807003"
+       y="-3.9032483"
+       width="236.67878"
+       height="218.5819"
+       id="rect1296" />
+    <rect
+       x="21.290445"
+       y="19.871082"
+       width="196.22693"
+       height="172.09777"
+       id="rect1117" />
+    <rect
+       x="-9.5806999"
+       y="-3.9032483"
+       width="236.67879"
+       height="218.58189"
+       id="rect1296-1" />
+  </defs>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0.72483999,0.72483999)">
+    <rect
+       style="fill:none;stroke:#000080;stroke-width:1.44968"
+       id="rect236"
+       width="50"
+       height="50"
+       x="0"
+       y="0"
+       rx="5.3514423"
+       ry="5.3514423" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.52292426,0,0,0.52292426,10.668199,1.5070676)"
+       id="text1294"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48.573px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect1296);fill:#000080;stroke:none;stroke-width:7.55906"><tspan
+         x="-9.5800781"
+         y="40.412278"
+         id="tspan1346">GT</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.52292426,0,0,0.52292426,7.573815,24.632089)"
+       id="text1294-7"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48.573px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;shape-inside:url(#rect1296-1);fill:#000080;stroke:none;stroke-width:7.55906"><tspan
+         x="-9.5800781"
+         y="40.412278"
+         id="tspan1348">+R</tspan></text>
+  </g>
+</svg>

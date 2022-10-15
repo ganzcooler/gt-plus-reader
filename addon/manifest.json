@@ -4,7 +4,11 @@
   "name": "GT Plus Reader",
   "version": "1.0",
 
-  "description": "Entfernt die unnötig teure Paywall auf Plus-Artikeln des GT.",
+  "description": "Entfernt die Paywall auf Plus-Artikeln des GT.",
+
+  "icons": {
+    "48": "gtpr.png"
+  },
 
   "content_scripts": [
     {
