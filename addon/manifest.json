@@ -2,12 +2,15 @@
 
   "manifest_version": 2,
   "name": "GT Plus Reader",
-  "version": "1.0",
+  "version": "1.1",
 
   "description": "Entfernt die Paywall auf Plus-Artikeln des GT.",
 
   "icons": {
-    "48": "gtpr.png"
+    "32": "gtpr_32.png",
+    "48": "gtpr_48.png",
+    "64": "gtpr_64.png",
+    "128": "gtpr_128.png"
   },
 
   "content_scripts": [
