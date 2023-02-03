@@ -1,6 +1,14 @@
-var header = document.getElementsByTagName("header")[0];
-var sourcecode = document.getElementsByTagName("html")[0].innerHTML;
+var header;
+var all_header = document.getElementsByTagName("header");
 
+// Get article header
+for (let i = 0; i < all_header.length; i++) {
+  if (all_header[i].className.includes("ArticleHeadstyled")) {
+    header = all_header[i];
+  }
+}
+
+var sourcecode = document.getElementsByTagName("html")[0].innerHTML;
 var article = header.parentElement;
 
 // Check if article is PLUS article
