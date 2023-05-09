@@ -8,7 +8,6 @@ for (let i = 0; i < all_header.length; i++) {
   }
 }
 
-//var sourcecode = document.getElementsByTagName("html")[0].innerHTML; // not needed? DELETE
 var article = header.parentElement;
 
 // Check if article is PLUS article
@@ -21,6 +20,7 @@ if (article.lastChild.lastChild.nodeName == "svg") {
   header.lastChild.className = "";
 
   // das script tag mit der id "fusion-metadata" fügt dem window die Variable Fusion hinzu
+  // unter "window.Fusion.globalContent.elements" sind die Elemente des Artikels
   var script = document.getElementById("fusion-metadata").innerHTML;
   eval(script); // window variable zu diesem zeitpunkt das objekt "Fusion" hinzufügen um darauf zugreifen zu können
   var global_content = window.Fusion.globalContent.elements;
@@ -33,18 +33,21 @@ if (article.lastChild.lastChild.nodeName == "svg") {
 
   var full_article = "";
   for (let i = 0; i < global_content.length; i++) {
+    // Header
     if (global_content[i]["type"] == "header") {
       full_article += "<h2 class=\"" + h2_tag_class_name + "\">";
       full_article += global_content[i]["text"];
       full_article += "</h2>";
     }
 
+    // Text
     else if (global_content[i]["type"] == "text") {
       full_article += "<p class=\"" + p_tag_class_name + "\">";
       full_article += global_content[i]["text"];
       full_article += "</p>";
     }
 
+    // Image
     else if (global_content[i]["type"] == "image") {
       full_article += "<img src=\"";
       full_article += global_content[i]["imageInfo"]["src"] + "\"" + " ";
@@ -53,20 +56,26 @@ if (article.lastChild.lastChild.nodeName == "svg") {
       full_article += global_content[i]["imageInfo"]["caption"] + "</figcaption>";
     }
 
+    // List
     else if (global_content[i]["type"] == "list") {
       full_article += "<p class=\"" + p_tag_class_name + "\">";
-      
       for (let j = 0; j < global_content[i]["list"]["items"].length; j++) {
         full_article += global_content[i]["list"]["items"][j]["text"] + "<br>";
       }
-
       full_article += "</p>";
+    }
+
+    // Gallery
+    else if (global_content[i]["type"] == "gallery") {
+      full_article += "<p class=\"" + p_tag_class_name + "\">";
+      let gallery_link = global_content[i]["galleryInfo"]["path"];
+      full_article += "<a href=\"" + gallery_link + "\">" + "Hier klicken für die Fotostrecke.</a>";
+      full_article += "</p>"
     }
   }
 
   // Get all p tags in div and delete them
   var p_tags_article = header.lastChild.lastChild.getElementsByTagName("p");
-
   for (let i = 0; i < p_tags_article.length; i++) {
     p_tags_article[i].remove();
   }
