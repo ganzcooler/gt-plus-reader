@@ -8,34 +8,82 @@ for (let i = 0; i < all_header.length; i++) {
   }
 }
 
-var sourcecode = document.getElementsByTagName("html")[0].innerHTML;
 var article = header.parentElement;
 
 // Check if article is PLUS article
-if (article.lastChild.nodeName == "svg") {
-    // Remove bars from article
-    article.lastChild.remove();
+if (article.lastChild.lastChild.nodeName == "svg") {
+  // Remove bars from article
+  article.lastChild.lastChild.remove();
 
-    // Remove top gradient
-    header.lastChild.style = "overflow: initial;"
-    header.lastChild.className = "";
+  // Remove top gradient
+  header.lastChild.style = "overflow: initial;"
+  header.lastChild.className = "";
 
-    // Divide article in body, headline, etc.
-    var preview_text = header.lastChild.firstChild.innerHTML;
-    var split_desc = sourcecode.split("\",\"description\":\"") // ","description":"
-    var split_body = split_desc[1].split("\",\"articleBody\":\"") // ","articleBody":"
-    var split_image = split_body[1].split("\",\"image\":") // ","image":
-    var body = split_image[0];
+  // das script tag mit der id "fusion-metadata" fügt dem window die Variable Fusion hinzu
+  // unter "window.Fusion.globalContent.elements" sind die Elemente des Artikels
+  var script = document.getElementById("fusion-metadata").innerHTML;
+  eval(script); // window variable zu diesem zeitpunkt das objekt "Fusion" hinzufügen um darauf zugreifen zu können
+  var global_content = window.Fusion.globalContent.elements;
+  
+  // Get p tags class name
+  var p_tag_class_name = header.lastChild.lastChild.getElementsByTagName("p")[0].className;
 
-    // Replace text with full article
-    var p_tags_article = header.lastChild.lastChild.getElementsByTagName("p");
-    p_tags_article[0].innerText = body;
+  // Get h2 tags class name
+  var h2_tag_class_name = header.getElementsByTagName("h2")[0].className;
 
-    for (let i = p_tags_article.length; i > 1; i--) {
-        p_tags_article[i-1].remove();
+  var full_article = "";
+  for (let i = 0; i < global_content.length; i++) {
+    // Header
+    if (global_content[i]["type"] == "header") {
+      full_article += "<h2 class=\"" + h2_tag_class_name + "\">";
+      full_article += global_content[i]["text"];
+      full_article += "</h2>";
     }
 
-    // Remove bottom gradient
-    var lastdiv = header.parentElement.getElementsByTagName("div")[header.parentElement.getElementsByTagName("div").length - 1];
-    lastdiv.className = "";
+    // Text
+    else if (global_content[i]["type"] == "text") {
+      full_article += "<p class=\"" + p_tag_class_name + "\">";
+      full_article += global_content[i]["text"];
+      full_article += "</p>";
+    }
+
+    // Image
+    else if (global_content[i]["type"] == "image") {
+      full_article += "<img src=\"";
+      full_article += global_content[i]["imageInfo"]["src"] + "\"" + " ";
+      full_article += "style=\"" + "max-width: 100\%;height: auto;\"" + "/>";
+      full_article += "<figcaption class=\"" + p_tag_class_name + "\"" + ">";
+      full_article += global_content[i]["imageInfo"]["caption"] + "</figcaption>";
+    }
+
+    // List
+    else if (global_content[i]["type"] == "list") {
+      full_article += "<p class=\"" + p_tag_class_name + "\">";
+      for (let j = 0; j < global_content[i]["list"]["items"].length; j++) {
+        full_article += global_content[i]["list"]["items"][j]["text"] + "<br>";
+      }
+      full_article += "</p>";
+    }
+
+    // Gallery
+    else if (global_content[i]["type"] == "gallery") {
+      full_article += "<p class=\"" + p_tag_class_name + "\">";
+      let gallery_link = global_content[i]["galleryInfo"]["path"];
+      full_article += "<a href=\"" + gallery_link + "\">" + "Hier klicken für die Fotostrecke.</a>";
+      full_article += "</p>"
+    }
+  }
+
+  // Get all p tags in div and delete them
+  var p_tags_article = header.lastChild.lastChild.getElementsByTagName("p");
+  for (let i = 0; i < p_tags_article.length; i++) {
+    p_tags_article[i].remove();
+  }
+
+  // Replace text with full article
+  header.lastChild.lastChild.innerHTML = full_article;
+
+  // Remove bottom gradient
+  var lastdiv = header.parentElement.getElementsByTagName("div")[header.parentElement.getElementsByTagName("div").length - 1];
+  lastdiv.className = "";
 }
