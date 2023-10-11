@@ -1,14 +1,29 @@
-var header;
-var all_header = document.getElementsByTagName("header");
+var article = document.getElementById("article");
+var header = article.getElementsByTagName("header")[0];
 
-// Get article header
-for (let i = 0; i < all_header.length; i++) {
-  if (all_header[i].className.includes("ArticleHeadstyled")) {
-    header = all_header[i];
-  }
+// insert remove-paywall-button
+var button = document.createElement('button');
+button.textContent = 'Paywall entfernen';
+button.style =
+  "border-radius: 2px;" +
+  "border: 0;" +
+  "background: #e84f1c;" +
+  "padding: 5px;" +
+  "font-family: 'DIN Next LT Pro', Arial, Roboto, sans-serif;" +
+  "font-weight: 700;" +
+  "letter-spacing: -0.25px;" +
+  "font-size: 26px;" +
+  "line-height: 30px;";
+button.onclick = removePayWall;
+
+function removePayWall() {
+  console.log("button clicked!!");
 }
 
-var article = header.parentElement;
+// Füge den Button als erstes child des Headers hinzu
+if (header) {
+  header.insertBefore(button, header.firstChild);
+}
 
 // Check if article is PLUS article
 if (article.lastChild.lastChild.nodeName == "svg") {
