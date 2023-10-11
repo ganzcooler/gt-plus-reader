@@ -1,22 +1,13 @@
 function removePaywall() {
-  // return if article is non-plus-article
-  let non_plus_article = true;
-  var all_spans = document.getElementsByTagName("span");
-  for (let i = 0; i < all_spans.length; i++) {
-    if (all_spans[i].getAttribute("data-testid") == "paid-icon") {
-      non_plus_article = false;
-      break;
-    }
-  }
-  if (non_plus_article) {
+  var article = document.getElementById("article");
+  var header = article.getElementsByTagName("header")[0];
+
+  if (isPlusArticle(article)) {
+    console.log("Removing Paywall...");
+  } else {
     console.log("Article is non-plus-article.");
     return;
   }
-
-  console.log("Removing Paywall...");
-
-  var article = document.getElementById("article");
-  var header = article.getElementsByTagName("header")[0];
 
   // svg-overlay (bars) entfernen
   if (article.lastChild.lastChild.nodeName == "svg") {
@@ -106,6 +97,24 @@ function removePaywall() {
 
   // Replace text with full article
   header.lastChild.lastChild.innerHTML = full_article;
+}
+
+function isPlusArticle(article) {
+  // 1) Check for "Kostenfrei"
+  if (article.innerHTML.search("Kostenfrei") != -1) {
+    return false;
+  }
+
+  // 2) Check for paid icon
+  var all_spans = document.getElementsByTagName("span");
+  for (let i = 0; i < all_spans.length; i++) {
+    if (all_spans[i].getAttribute("data-testid") == "paid-icon") {
+      return true;
+    }
+  }
+
+  // 3) Kein paid-icon und kein Kostenfrei
+  return false;
 }
 
 let lastExecutionTime = 0; // Zeitpunkt der letzten Ausführung
