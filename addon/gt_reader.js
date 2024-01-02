@@ -1,28 +1,10 @@
 function removePaywall() {
-  var article = document.getElementById("article");
+  var article = document.getElementsByTagName("article")[0];
   var header = article.getElementsByTagName("header")[0];
 
-  if (isPlusArticle(article)) {
-    console.log("Removing Paywall...");
-  } else {
-    console.log("Article is non-plus-article.");
-    return;
-  }
-
-  // svg-overlay (bars) entfernen
-  if (article.lastChild.lastChild.nodeName == "svg") {
-    article.lastChild.lastChild.remove();
-  }
-
-  // abo-optionen entfernen
-  var divs_article = article.getElementsByTagName("div");
-  var lastdiv_article;
-  for (let i = divs_article.length - 1; i > 0; i--) {
-    if (divs_article[i].parentElement.id == "article") {
-      lastdiv_article = divs_article[i];
-      lastdiv_article.remove();
-      break;
-    }
+  // delete last div in article (svg-overlay und abo-optionen)
+  if (article.lastChild.nodeName == "DIV") {
+    article.lastChild.remove();
   }
 
   // Remove top gradient from article
@@ -99,37 +81,49 @@ function removePaywall() {
   header.lastChild.lastChild.innerHTML = full_article;
 }
 
-function isPlusArticle(article) {
-  // 1) Check for "Kostenfrei"
-  if (article.innerHTML.search("Kostenfrei") != -1) {
-    return false;
-  }
+// insert button to remove paywall
+function addRemoveButton() {
+  let article = document.getElementsByTagName("article")[0];
+  let header = article.getElementsByTagName("header")[0];
 
-  // 2) Check for paid icon
-  var all_spans = document.getElementsByTagName("span");
-  for (let i = 0; i < all_spans.length; i++) {
-    if (all_spans[i].getAttribute("data-testid") == "paid-icon") {
-      return true;
+  // button definition
+  remove_paywall_btn = document.createElement("button");
+  remove_paywall_btn.innerHTML = "Remove Paywall";
+  remove_paywall_btn.id = "remove-paywall";
+  remove_paywall_btn.style = "background: rgb(206, 59, 10);" +
+    "font-family: 'DIN Next LT Pro', Arial, Roboto, sans-serif;" +
+    "font-weight: 700;" +
+    "font-size: 2rem;" +
+    "line-height: 30px;";
+    remove_paywall_btn.onclick = function() {removePaywall()};
+
+  // set button as first child of header if it doesn't already exist
+  let headerButtons = header.getElementsByTagName("button");
+
+  for (let i = 0; i < headerButtons.length; i++) {
+    if (headerButtons[i].id == "remove-paywall") {
+      console.log("button already added");
+      return;
     }
   }
 
-  // 3) Kein paid-icon und kein Kostenfrei
-  return false;
+  console.log("adding remove-paywall-button");
+  header.prepend(remove_paywall_btn);
 }
 
-let lastExecutionTime = 0; // Zeitpunkt der letzten Ausführung
+let lastExecutionTime = 0; // Zeitpunkt der letzten Ausfuehrung
 let timeout; // Timeout-Referenz
 
-// Funktion, die bei DOM-Änderungen aufgerufen wird
+// Funktion, die bei DOM-Aenderungen aufgerufen wird
 function handleDOMChanges(mutationsList, observer) {
   const currentTime = Date.now();
 
-  // Prüfe, ob mindestens eine Sekunde seit der letzten Ausführung vergangen ist
+  // Pruefe, ob mindestens eine Sekunde seit der letzten Ausfuehrung vergangen ist
   if (currentTime - lastExecutionTime >= 1000) {
-    // Dein Code, der bei jeder DOM-Änderung ausgeführt werden soll
-    removePaywall();
+    // Dein Code, der bei jeder DOM-Aenderung ausgefuehrt werden soll
+    addRemoveButton();
 
-    // Aktualisiere den Zeitpunkt der letzten Ausführung
+    // Aktualisiere den Zeitpunkt der letzten Ausfuehrung
     lastExecutionTime = currentTime;
   } else {
     // Falls ein Timeout bereits geplant ist, breche es ab
@@ -137,21 +131,21 @@ function handleDOMChanges(mutationsList, observer) {
       clearTimeout(timeout);
     }
 
-    // Setze ein neues Timeout, um den Code nach einer Sekunde auszuführen
+    // Setze ein neues Timeout, um den Code nach einer Sekunde auszufuehren
     timeout = setTimeout(() => {
-      lastExecutionTime = Date.now(); // Aktualisiere den Zeitpunkt der letzten Ausführung
+      lastExecutionTime = Date.now(); // Aktualisiere den Zeitpunkt der letzten Ausfuehrung
     }, 1000);
   }
 }
 
-// Optionen für den MutationObserver
+// Optionen fuer den MutationObserver
 const observerOptions = { childList: true, subtree: true };
 
-// DOM-Element, das überwacht werden soll (z. B. das gesamte Dokument)
+// DOM-Element, das ueberwacht werden soll (z. B. das gesamte Dokument)
 const targetNode = document;
 
-// Erstelle einen MutationObserver und füge deine Funktion hinzu
+// Erstelle einen MutationObserver und fuege deine Funktion hinzu
 const mutationObserver = new MutationObserver(handleDOMChanges);
 
-// Starte die Überwachung des DOM
+// Starte die ueberwachung des DOM
 mutationObserver.observe(targetNode, observerOptions);
