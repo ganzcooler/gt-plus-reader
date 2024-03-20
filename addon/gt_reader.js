@@ -8,12 +8,12 @@ function removePaywall() {
   }
 
   // Remove top gradient from article
-  header.lastChild.style = "overflow: initial;";
+  header.lastChild.style = "overflow: initial; height: auto;";
   header.lastChild.className = "";
 
   // Get class names for formatting
   var p_tag_class_name =
-    header.lastChild.lastChild.getElementsByTagName("p")[0].className;
+    header.lastChild.getElementsByTagName("p")[0].className;
   var h2_tag_class_name = header.getElementsByTagName("h2")[0].className;
 
   // das script tag mit der id "fusion-metadata" fügt dem window die Variable Fusion hinzu
@@ -22,19 +22,22 @@ function removePaywall() {
   eval(script); // window variable zu diesem zeitpunkt das objekt "Fusion" hinzufügen um darauf zugreifen zu können
   var global_content = window.Fusion.globalContent.elements;
 
-  // get article
   var full_article = "";
+
+  // global style definition
+  var styles = 'style="overflow: initial; height: auto;"';
+
   for (let i = 0; i < global_content.length; i++) {
     // Header
     if (global_content[i]["type"] == "header") {
-      full_article += '<h2 class="' + h2_tag_class_name + '">';
+      full_article += '<h2 class="' + h2_tag_class_name + '" ' + styles + '>';
       full_article += global_content[i]["text"];
       full_article += "</h2>";
     }
 
     // Text
     else if (global_content[i]["type"] == "text") {
-      full_article += '<p class="' + p_tag_class_name + '">';
+      full_article += '<p class="' + p_tag_class_name + '" ' + styles + '>';
       full_article += global_content[i]["text"];
       full_article += "</p>";
     }
@@ -43,7 +46,7 @@ function removePaywall() {
     else if (global_content[i]["type"] == "image") {
       full_article += '<img src="';
       full_article += global_content[i]["imageInfo"]["src"] + '"' + " ";
-      full_article += 'style="' + 'max-width: 100%;height: auto;"' + "/>";
+      full_article += 'style="' + 'max-width: 100%;height: auto; overflow: initial;"' + "/>";
       full_article += '<figcaption class="' + p_tag_class_name + '"' + ">";
       full_article +=
         global_content[i]["imageInfo"]["caption"] + "</figcaption>";
@@ -51,7 +54,7 @@ function removePaywall() {
 
     // List
     else if (global_content[i]["type"] == "list") {
-      full_article += '<p class="' + p_tag_class_name + '">';
+      full_article += '<p class="' + p_tag_class_name + '" ' + styles + '>';
       for (let j = 0; j < global_content[i]["list"]["items"].length; j++) {
         full_article += global_content[i]["list"]["items"][j]["text"] + "<br>";
       }
@@ -60,7 +63,7 @@ function removePaywall() {
 
     // Gallery
     else if (global_content[i]["type"] == "gallery") {
-      full_article += '<p class="' + p_tag_class_name + '">';
+      full_article += '<p class="' + p_tag_class_name + '" ' + styles + '>';
       let gallery_link = global_content[i]["galleryInfo"]["path"];
       full_article +=
         '<a href="' +
@@ -71,14 +74,8 @@ function removePaywall() {
     }
   }
 
-  // Get all p tags in div and delete them
-  var p_tags_article = header.lastChild.lastChild.getElementsByTagName("p");
-  for (let i = 0; i < p_tags_article.length; i++) {
-    p_tags_article[i].remove();
-  }
-
   // Replace text with full article
-  header.lastChild.lastChild.innerHTML = full_article;
+  header.lastChild.innerHTML = full_article;
 }
 
 // insert button to remove paywall
@@ -94,7 +91,9 @@ function addRemoveButton() {
     "font-family: 'DIN Next LT Pro', Arial, Roboto, sans-serif;" +
     "font-weight: 700;" +
     "font-size: 2rem;" +
-    "line-height: 30px;";
+    "line-height: 30px;" +
+    "border: none;" +
+    "border-radius: 3px;";
     remove_paywall_btn.onclick = function() {removePaywall()};
 
   // set button as first child of header if it doesn't already exist
