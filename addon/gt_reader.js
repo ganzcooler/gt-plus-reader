@@ -37,7 +37,7 @@ function removePaywall() {
 
     // Text
     else if (global_content[i]["type"] == "text") {
-      full_article += '<p class="' + p_tag_class_name + '" ' + styles + '>';
+      full_article += '<p class="' + p_tag_class_name + '" ' + 'style="overflow: initial; height: auto; font-weight: 400"' + '>';
       full_article += global_content[i]["text"];
       full_article += "</p>";
     }
