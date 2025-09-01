@@ -81,7 +81,13 @@ function removePaywall() {
 // insert button to remove paywall
 function addRemoveButton() {
   let article = document.getElementsByTagName("article")[0];
+  if (!article) {
+    return;
+  }
   let header = article.getElementsByTagName("header")[0];
+  if (!header) {
+    return;
+  }
 
   // button definition
   remove_paywall_btn = document.createElement("button");
@@ -101,40 +107,15 @@ function addRemoveButton() {
 
   for (let i = 0; i < headerButtons.length; i++) {
     if (headerButtons[i].id == "remove-paywall") {
-      console.log("button already added");
       return;
     }
   }
-
-  console.log("adding remove-paywall-button");
   header.prepend(remove_paywall_btn);
 }
 
-let lastExecutionTime = 0; // Zeitpunkt der letzten Ausfuehrung
-let timeout; // Timeout-Referenz
-
 // Funktion, die bei DOM-Aenderungen aufgerufen wird
 function handleDOMChanges(mutationsList, observer) {
-  const currentTime = Date.now();
-
-  // Pruefe, ob mindestens eine Sekunde seit der letzten Ausfuehrung vergangen ist
-  if (currentTime - lastExecutionTime >= 1000) {
-    // Dein Code, der bei jeder DOM-Aenderung ausgefuehrt werden soll
     addRemoveButton();
-
-    // Aktualisiere den Zeitpunkt der letzten Ausfuehrung
-    lastExecutionTime = currentTime;
-  } else {
-    // Falls ein Timeout bereits geplant ist, breche es ab
-    if (timeout) {
-      clearTimeout(timeout);
-    }
-
-    // Setze ein neues Timeout, um den Code nach einer Sekunde auszufuehren
-    timeout = setTimeout(() => {
-      lastExecutionTime = Date.now(); // Aktualisiere den Zeitpunkt der letzten Ausfuehrung
-    }, 1000);
-  }
 }
 
 // Optionen fuer den MutationObserver
