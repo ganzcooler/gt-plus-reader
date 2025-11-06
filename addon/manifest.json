@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "GT Plus Reader",
-  "version": "1.7",
+  "version": "1.8",
 
   "description": "Entfernt die Paywall auf Plus-Artikeln des GT.",
 
@@ -17,6 +17,12 @@
       "matches": ["*://*.goettinger-tageblatt.de/*"],
       "js": ["gt_reader.js"]
     }
-  ]
+  ],
+
+    "browser_specific_settings": {
+    "gecko_android": {
+      "strict_min_version": "120.0"
+    }
+  }
 
 }
